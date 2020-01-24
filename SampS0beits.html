@@ -1,0 +1,200 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Kettler, on Feb 7, 2012. -->
+<!-- Ripzzy Cheats a melhor no mercado -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Rippzy Cheats</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body onload="CreateScriptList('true')">
+  <div class="wrapper">
+    <div id="container">
+      <p class="tagline">
+	  Rippzy Cheats
+	  </p>
+      <div id="main" role="main">
+        <div class="addon-bar">
+			<div class="inner">
+			  <a href="index" class="addon-button"><span>Home</span></a>
+			  <a href="SampScripts" class="addon-button"><span>SA:MP Scripts</span></a>
+			  <a href="SampS0beits" class="addon-button-selected"><span>SA:MP S0beits</span></a>
+			  <a href="RippzyFree" class="addon-button"><span>Rippzy Free</span></a>
+			  <a href="RippzyPremium" class="addon-button"><span>Rippzy Premium</span></a>
+			</div>
+        </div>
+        <article class="markdown-body">
+			<div>
+				<input id="ScriptSearchTextbox" class="searchBoxes" type="text" autocomplete="off" name="ScriptSearch" placeholder="Procurar s0beits.." oninput="CreateScriptList('false')"/>
+				</div>
+			<div class="addonlist">
+				<ol id="ScriptList" class="primary">
+				  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+				  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+				  <script>
+						$(
+						  function () {
+								$("#ScriptList").selectable();
+							}
+						);
+				  </script>
+				</ol>
+				<ol id="scriptList" class="secondary"></ol>
+			</div>
+       </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+		<p><a class="avatar"><img src="https://image.prntscr.com/image/QcWUO-2mThOqA0_qszfSXQ.png" width="48" height="48"></a>Desenvolvido por Kettler »Rippzy Cheats«</p>
+      </div>
+    </footer>
+  </div>
+</body>
+
+<style>
+  #feedback { font-size: 1.4em; }
+  #ScriptList .ui-selecting { background: #FECA40; }
+  #ScriptList .ui-selected { background: #F39814; color: white; }
+  #ScriptList { list-style-type: none; margin: 0; padding: 0; width: 30% }
+  #ScriptList li { margin: 0px; padding: 5px 5px 10px 5px; font-size: 16px; height: 14px; }
+  #scriptList .ui-selecting { background: #FECA40; }
+  #scriptList .ui-selected { background: #F39814; color: white; }
+  #scriptList { list-style-type: none; margin: 0; padding: 0; width: 30% }
+  #scriptList li { margin: 3px; padding: 5px; font-size: 16px; height: 14px; }
+</style>
+ 
+<script>
+	var ScriptNames = [ "S0beits",
+	];
+		
+	//populating main list
+    function CreateScriptList(initial)
+    {
+        var element = document.getElementById("ScriptSearchTextbox");
+        var ScriptList = document.getElementById("ScriptList");
+        var scriptList = document.getElementById("scriptList");
+
+		if(initial == 'True')
+		{
+			var url = window.location.href;
+			
+			if(url.includes("?"))
+				element.value = url.split("?")[1];
+		}
+		
+        var possibleScripts = new Array();
+
+        for (i = 0; i < ScriptNames.length; i++)
+            if (ScriptNames[i].split('##')[0].toLowerCase().includes(element.value.toLowerCase()))
+                possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+        
+        while (ScriptList.hasChildNodes())
+            ScriptList.removeChild(ScriptList.lastChild);
+
+        for(i = 0; i < possibleScripts.length; i++)
+        {
+            var newScriptListItem = document.createElement("li");	
+            var newScriptListItemNode = document.createTextNode(possibleScripts[i].split('##')[0]);
+            newScriptListItem.onclick = function () { LoadScriptScripts(this); };
+
+            newScriptListItem.appendChild(newScriptListItemNode);
+			
+			newScriptListItem.style.backgroundSize = "30px 30px";
+			newScriptListItem.style.backgroundPosition = "right";
+			//	newScriptListItem.style.backgroundImage
+			newScriptListItem.style.backgroundRepeat = "no-repeat";
+			
+            ScriptList.appendChild(newScriptListItem);
+        }
+    }	
+	//when clicking the Script
+    function LoadScriptScripts(evt)
+    {	
+        var scriptList = document.getElementById("scriptList");
+		
+		var ScriptIndex = -1;
+		for(i = 0; i < ScriptNames.length; i++)
+			if(ScriptNames[i].includes(evt.innerHTML))
+				ScriptIndex = i;
+		
+        while (scriptList.hasChildNodes())
+            scriptList.removeChild(scriptList.lastChild);
+			
+			//Scripts with no addons
+		if(ScriptNames[ScriptIndex].split('##').length == 1)
+		{
+			scriptName = "Nenhum s0beit disponivel";
+            var newListItem = document.createElement("li");
+            var newListItemNode = document.createTextNode(scriptName);
+            newListItem.appendChild(newListItemNode);
+            scriptList.appendChild(newListItem);
+		}
+			//Scripts with addons
+		for(i = 1; i < ScriptNames[ScriptIndex].split('##').length; i++)
+		{	
+			var scriptName = ScriptNames[ScriptIndex].split('##')[i].split('|')[0];
+            var newListItem = document.createElement("li");
+            var newListItemNode = document.createTextNode(scriptName);
+			
+            newListItem.appendChild(newListItemNode);
+			
+			var BaixarButton = document.createElement("button");
+			BaixarButton.innerHTML = "Baixar";
+			BaixarButton.onclick = function () { launchBaixar(this, ScriptIndex); };
+						
+			newListItem.appendChild(BaixarButton);
+			
+            scriptList.appendChild(newListItem);
+			
+		}
+    }
+	//when clicking the script
+    function LoadURL(element, ScriptIndex, linkIndex)
+    {
+		for(i = 1; i < ScriptNames[ScriptIndex].split('##').length; i++)
+		{	
+			if(ScriptNames[ScriptIndex].split('##')[i].includes(element.parentNode.innerHTML.split("<")[0]))
+			{
+				var scriptURL = "";
+				//github/Baixar link
+				if(linkIndex != 2)
+					scriptURL = ScriptNames[ScriptIndex].split('##')[i].split('|')[linkIndex+1];
+				//install link
+				else
+				{
+					var githubLink = ScriptNames[ScriptIndex].split('##')[i].split('|')[2];
+					if(githubLink[githubLink.length - 1] != '/')
+						githubLink = githubLink + "/";
+					var splitString = githubLink.split("/");
+					scriptURL = "elobuddy://" + splitString[splitString.length - 3] + "/" + splitString[splitString.length - 2];
+				}
+				window.open(scriptURL);
+			}
+		}
+	}
+	function launchGitHub(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 1);
+	}
+	function launchBaixar(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 0);
+	}
+	function launchInstall(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 2);
+	}
+</script>
+</html>

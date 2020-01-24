@@ -1,0 +1,318 @@
+<!doctype html>
+<!-- Database desenvolvida por Kettler -->
+<!-- Ripzzy Cheats a melhor no mercado -->
+<html>
+<body>
+    <nav></nav>
+    <article class="hidden">Lorem ipsum...</article>
+    <footer></footer>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Rippzy Cheats</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body onload="CreateScriptList('True')">
+  <div class="wrapper">
+    <div id="container">
+      <p class="tagline">
+		Rippzy Cheats
+	  </p>
+      <div id="main" role="main">
+        <div class="s0beit-bar">
+			<div class="inner">
+			  <a href="index" class="s0beit-button"><span>Home</span></a>
+			  <a href="SampScripts" class="s0beit-button-selected"><span>SA:MP Scripts</span></a>
+			  <a href="SampS0beits" class="s0beit-button"><span>SA:MP S0beits</span></a>
+			  <a href="RippzyFree" class="s0beit-button"><span>Rippzy Free</span></a>
+			  <a href="RippzyPremium" class="s0beit-button"><span>Rippzy Premium</span></a>
+			</div>
+        </div>
+        <article class="markdown-body">
+			<div>
+				<input id="ScriptSearchTextbox" class="searchBoxes" type="text" autocomplete="off" name="ScriptSearch" placeholder="Procurar scripts..." oninput="CreateScriptList('False')"/>
+				
+				
+				
+			</div>
+			<div>
+				<select id="ScriptListType" class="comboBox" onchange="CreateScriptList('False')">
+					<option value="AllScripts">Todos os scripts</option>
+				</select>
+				</p>
+			</div>
+			<div class="s0beitlist">
+				<ol id="ScriptList" class="primary"></ol>
+				<ol id="scriptList" class="secondary"></ol>
+			</div>
+       </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+		<p><a class="avatar"><img src="https://image.prntscr.com/image/QcWUO-2mThOqA0_qszfSXQ.png" width="48" height="48"></a>Desenvolvido por Kettler »Rippzy Cheats«</p>
+      </div>
+    </footer>
+  </div>
+</body>
+
+<style>
+  #feedback { font-size: 1.4em; }
+  #ScriptList .ui-selecting { background: #FECA40; }
+  #ScriptList .ui-selected { background: #F39814; color: white; }
+  #ScriptList { list-style-type: none; margin: 0; padding: 0; width: 30% }
+  #ScriptList li { margin: 0px; padding: 5px 5px 10px 5px; font-size: 16px; height: 14px; }
+  #scriptList .ui-selecting { background: #FECA40; }
+  #scriptList .ui-selected { background: #F39814; color: white; }
+  #scriptList { list-style-type: none; margin: 0; padding: 0; width: 30% }
+  #scriptList li { margin: 3px; padding: 5px; font-size: 16px; height: 14px; }
+</style>
+ 
+<script>
+	var ScriptNames = ["Servidores RP##ProAim|https://anonfile.com/b0G7V2P4na/ProAim_rar|##Rippzy TP|https://anonfile.com/r0GbV1P1n6/RippzyTP_rar|##CarHacker|https://anonfile.com/J380V5P3n1/CarHacker_rar|##Wallhack|https://anonfile.com/53G2VbPan6/Wallhack_rar|##SilentAim|https://anonfile.com/NeG3V9Pen2/SilentAim_rar",
+	"Servidores DM",
+	"Servidores Stunt", 
+	"Troll##Vassoura|https://anonfile.com/L6MeV9Pbn6/Vassoura_rar|##Eject|https://anonfile.com/b5N7V3Pbn2/Eject_rar|##Chase|https://anonfile.com/76N7VeP5n0/Chase_rar|##Fly|https://anonfile.com/N8N5VaP6n8/Fly_rar|##Invisibilidade|https://anonfile.com/d1OcV3Pdn5/Invisibilidade_rar"];
+	
+	//populating main list
+    function CreateScriptList(initial)
+    {
+        var element = document.getElementById("ScriptSearchTextbox");
+        var ScriptList = document.getElementById("ScriptList");
+		var comboBox = document.getElementById("ScriptListType");
+		
+		if(initial == 'True')
+		{
+			var url = window.location.href;
+			
+			if(url.includes("?"))
+			{
+				element.value = url.split("?")[1].replace("%20", " ");
+				comboBox.value = "AllScripts";
+			}
+		}
+		else
+		{
+			
+			for(i = 0; i < listIds.length; i++)
+			{
+				document.getElementById(listIds[i]).value = "notselected";
+				document.getElementById(listIds[i]).style.borderColor = "#000000";
+			}
+		}
+		
+        var possibleScripts = new Array();
+
+        for (i = 0; i < ScriptNames.length; i++)
+            if (ScriptNames[i].split("##")[0].toLowerCase().includes(element.value.toLowerCase()))
+			{
+				if(comboBox.value == "AllScripts")
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+				else if(comboBox.value == "ScriptsAvailable" && ScriptNames[i].split("##").length > 1)
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+				else if(comboBox.value == "ScriptsNotAvailable" && ScriptNames[i].split("##").length == 1)
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+			}
+		
+		AddScriptsToList(possibleScripts);
+    }	
+	//when clicking the Script
+    function LoadScriptScripts(evt)
+    {	
+        var scriptList = document.getElementById("scriptList");
+        var ScriptList = document.getElementById("ScriptList");
+		var oldSelectedItem = document.getElementById(ScriptList.value);
+		
+		if(oldSelectedItem != null)
+		{
+			oldSelectedItem.style.backgroundColor = "#FFF";
+			oldSelectedItem.style.color = "black";
+		}
+		
+		evt.style.backgroundColor = "#F39814";
+		evt.style.color = "white";
+		
+		//set newly selected entity
+		ScriptList.value = evt.id;
+			
+		var scriptIndex = -1;
+		
+		for(i = 0; i < ScriptNames.length; i++)
+			if(ScriptNames[i].split('##')[0].toLowerCase() == evt.innerHTML.toLowerCase())
+				ScriptIndex = i;
+		
+        while (scriptList.hasChildNodes())
+            scriptList.removeChild(scriptList.lastChild);
+			
+		//Scripts with no s0beits
+		if(ScriptNames[ScriptIndex].split('##').length == 1)
+		{
+			scriptName = "Nenhum script postado atualmente!";
+            var newListItem = document.createElement("li");
+            var newListItemNode = document.createTextNode(scriptName);
+            newListItem.appendChild(newListItemNode);
+            scriptList.appendChild(newListItem);
+		}
+		
+		//Scripts with s0beits
+		for(i = 1; i < ScriptNames[ScriptIndex].split('##').length; i++)
+		{	
+			var scriptName = ScriptNames[ScriptIndex].split('##')[i].split('|')[0];
+            var newListItem = document.createElement("li");
+            var newListItemNode = document.createTextNode(scriptName);
+			
+            newListItem.appendChild(newListItemNode);
+			
+			var BaixarButton = document.createElement("button");
+			BaixarButton.innerHTML = "Baixar";
+			BaixarButton.onclick = function () { launchBaixar(this, ScriptIndex); };
+						
+			newListItem.appendChild(BaixarButton);
+			
+            scriptList.appendChild(newListItem);
+		}
+    }
+	//when clicking the script
+    function LoadURL(element, ScriptIndex, linkIndex)
+    {
+		for(i = 1; i < ScriptNames[ScriptIndex].split('##').length; i++)
+		{	
+			if(ScriptNames[ScriptIndex].split('##')[i].includes(element.parentNode.innerHTML.split("<")[0]))
+			{
+				var scriptURL = "";
+				//github/Baixar link
+				if(linkIndex != 2)
+					scriptURL = ScriptNames[ScriptIndex].split('##')[i].split('|')[linkIndex+1];
+				//install link
+				else
+				{
+					var githubLink = ScriptNames[ScriptIndex].split('##')[i].split('|')[2];
+					if(githubLink[githubLink.length - 1] != '/')
+						githubLink = githubLink + "/";
+					var splitString = githubLink.split("/");
+					scriptURL = "anonfile://" + splitString[splitString.length - 3] + "/" + splitString[splitString.length - 2];
+				}
+				window.open(scriptURL);
+			}
+		}
+	}
+	function launchGitHub(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 1);
+	}
+	function launchBaixar(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 0);
+	}
+	function launchInstall(element, ScriptIndex)
+	{
+		LoadURL(element, ScriptIndex, 2);
+	}
+	function sortScriptByType(element)
+	{
+        var ScriptList = document.getElementById("ScriptList");
+		var comboBox = document.getElementById("ScriptListType");
+        var searchTextBox = document.getElementById("ScriptSearchTextbox");
+		
+		searchTextBox.value = "";
+		
+		var listIds = ["SupportType", "TankType", "FighterType", "MageType", "AssasinType", "MarksmanType"];
+		
+		
+		if(element.value == "selected")
+		{
+			for(i = 0; i < listIds.length; i++)
+			{
+				document.getElementById(listIds[i]).value = "notselected";
+				document.getElementById(listIds[i]).style.borderColor = "#000000";
+			}
+			element.value = "notselected";
+			element.style.borderColor = "#000000";
+			CreateScriptList("False");
+			return;
+		}
+		else
+		{
+			for(i = 0; i < listIds.length; i++)
+			{
+				document.getElementById(listIds[i]).value = "notselected";
+				document.getElementById(listIds[i]).style.borderColor = "#000000";
+			}
+			element.value = "selected";
+			element.style.borderColor = "#F39814";
+		}
+		
+		var possibleScripts = new Array();
+			
+        for (i = 0; i < ScriptNames.length; i++)
+            if (typeScripts.includes(ScriptNames[i].split("##")[0]))
+			{
+				if(comboBox.value == "AllScripts")
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+				else if(comboBox.value == "ScriptsAvailable" && ScriptNames[i].split("##").length > 1)
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+				else if(comboBox.value == "ScriptsNotAvailable" && ScriptNames[i].split("##").length == 1)
+					possibleScripts.splice(possibleScripts.length, 0, ScriptNames[i]);
+			}
+			
+		AddScriptsToList(possibleScripts);
+	}
+	function AddScriptsToList(possibleScripts)
+	{
+        var ScriptList = document.getElementById("ScriptList");
+        var scriptList = document.getElementById("scriptList");
+
+        while (scriptList.hasChildNodes())
+            scriptList.removeChild(scriptList.lastChild);
+			
+        while (ScriptList.hasChildNodes())
+            ScriptList.removeChild(ScriptList.lastChild);
+		
+		var hasScript = "false";
+		var thingToLoad;
+        for(i = 0; i < possibleScripts.length; i++)
+        {
+            var newScriptListItem = document.createElement("li");	
+            var newScriptListItemNode = document.createTextNode(possibleScripts[i].split('##')[0]);
+            newScriptListItem.onclick = function () { LoadScriptScripts(this); };
+
+			var urlLink = "url('";
+			var ScriptName = "";
+            newScriptListItem.appendChild(newScriptListItemNode);
+			
+			
+			newScriptListItem.style.backgroundImage = urlLink + ScriptName + ".png')";
+			
+			newScriptListItem.style.backgroundSize = "30px 30px";
+			newScriptListItem.style.backgroundPosition = "right";
+			newScriptListItem.style.backgroundRepeat = "no-repeat";
+			newScriptListItem.id = possibleScripts[i].split("##")[0];
+			
+            ScriptList.appendChild(newScriptListItem);
+			
+			if(possibleScripts[i].includes(ScriptList.value))
+			{	
+				thingToLoad = newScriptListItem;
+				hasScript = "true";
+			}
+			
+			if(possibleScripts.length == 1)
+				LoadScriptScripts(newScriptListItem);
+        }
+		if(hasScript == "false")
+			ScriptList.value = null;
+		else
+			LoadScriptScripts(thingToLoad);
+	}
+</script>
+</html>
